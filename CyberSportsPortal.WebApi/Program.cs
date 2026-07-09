@@ -8,21 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Получаем настройки и строим строку подключения
 var dbSettings = builder.Configuration.GetRequiredSection(nameof(DbSettings)).Get<DbSettings>();
-if (dbSettings == null)
-{
-    throw new InvalidOperationException("DbSettings section is missing in configuration");
-}
-
-var connectionString = $"Host={dbSettings.Host};Port={dbSettings.Port};Database={dbSettings.DbName};Username={dbSettings.User};Password={dbSettings.Password}";
-
-Console.WriteLine($"Connecting to: Host={dbSettings.Host}, Port={dbSettings.Port}, Database={dbSettings.DbName}");
-
-// Регистрируем DbContext
-builder.Services.AddDbContext<CyberSportsContext>(options =>
-    options.UseNpgsql(connectionString));
-
+builder.Services.AddDataAccess(dbSettings);
 builder.Services.AddBusinessLogic();
 
 builder.Services.AddCors(options =>
@@ -39,20 +26,11 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Выполняем миграции
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<CyberSportsContext>();
-    try
-    {
-        context.Database.Migrate();
-        Console.WriteLine("Database migration completed successfully");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Error during migration: {ex.Message}");
-        throw;
-    }
+    Thread.Sleep(10000);
+    var context = scope.ServiceProvider.GetService<CyberSportsContext>();
+    context?.Database.Migrate();
 }
 
 app.UseSwagger();
