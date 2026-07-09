@@ -72,14 +72,18 @@ public class TournamentTasksService
         return result;
     }
 
+    // Задание 6
     public int ComparePrizes(string prizeA, string prizeB)
     {
-        if (prizeA == prizeB)
-            return 0;
-        if (prizeA[prizeA.Length - 1] > prizeB[prizeB.Length - 1])
+        int.TryParse(prizeA, out int numberA);
+        int.TryParse(prizeB, out int numberB);
+
+        if (numberA > numberB)
             return 1;
-        else
+        else if (numberA < numberB)
             return -1;
+        else
+            return 0;
     }
 
     public Dictionary<int, decimal> GetTournamentVictoryProbabilities(List<TeamWithVictoryProbabilities> teams, Dictionary<int, int> standings)
