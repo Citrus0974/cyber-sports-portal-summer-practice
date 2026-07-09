@@ -1,6 +1,5 @@
 ﻿using CyberSportsPortal.Data.Model.Views;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CyberSportsPortal.Core.Services;
 
@@ -9,10 +8,11 @@ public class PlayerTasksService
     // Задание 5.
     public List<PlayerView> FilterPlayers(List<PlayerView> players, string filter)
     {
+        List<PlayerView> result = new List<PlayerView>();
 
         if (players == null)
         {
-            return new List<PlayerView>();
+            return result;
         }
 
         if (filter == "")
@@ -20,7 +20,25 @@ public class PlayerTasksService
             return players;
         }
 
-        filter = filter.ToLower();
-        return players.Where(p => p.NickName.ToLower().Contains(filter) || p.CombinedName.ToLower().Contains(filter)).ToList();
+        foreach (PlayerView player in players)
+        {
+            if (player.NickName != null)
+            {
+                if (player.NickName.Contains(filter))
+                {
+                    result.Add(player);
+                    continue;
+                }
+            }
+
+            if (player.CombinedName != null)
+            {
+                if (player.CombinedName.Contains(filter))
+                {
+                    result.Add(player);
+                }
+            }
+        }
+        return result;
     }
 }

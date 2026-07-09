@@ -3,7 +3,6 @@ using CyberSportsPortal.Data.Model.Enums;
 using CyberSportsPortal.Data.Model.Views;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CyberSportsPortal.Core.Services;
 
@@ -38,9 +37,17 @@ public class TournamentTasksService
         {
             return 0;
         }
-        
-        return players.Where(p => p.Country == country).Count();
 
+        int count = 0;
+        foreach (var player in players)
+        {
+            if (player.Country == country)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     // Задание 4

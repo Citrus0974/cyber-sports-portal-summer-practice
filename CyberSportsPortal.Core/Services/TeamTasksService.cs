@@ -21,7 +21,8 @@ public class TeamTasksService(CyberSportsContext context)
         }
 
         return team.TeamTournamentResults
-            .Where(result => result.Tournament.EndDate.Year == year)
+            .Where(result => result.Tournament.StartDate.Year == year &&
+                             result.Tournament.EndDate.Year == year)
             .Select(result => result.Tournament.TournamentPrizes
                 .FirstOrDefault(p => p.Place == result.Place)?.Prize ?? 0)
             .Sum();
