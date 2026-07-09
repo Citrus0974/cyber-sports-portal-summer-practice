@@ -27,10 +27,10 @@
     [Parameter]
     public TeamView Team { get; set; }
 
-    private void DatePicked (DateTimeChangedEventArgs e)
+    private void DatePicked(DateTimeChangedEventArgs e)
     {
         IncomeYear = e.Date.Year;
-        Income = TeamTasksService.GetTeamIncomeForYear(Team, IncomeYear);
+        Income = TeamTasksService.GetTeamIncomeForYear(Team.Id, IncomeYear);
         StateHasChanged();
     }
 
