@@ -8,7 +8,7 @@ namespace CyberSportsPortal.Core.Services;
 
 public class TournamentTasksService
 {
-    // Задание 1
+    // Задание 1.
     public string GetTournamentStatus(Tournament tournament)
     {
         if (tournament == null)
