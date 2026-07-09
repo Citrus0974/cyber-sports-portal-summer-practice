@@ -5,7 +5,7 @@ namespace CyberSportsPortal.Core.Services;
 
 public class PlayerTasksService
 {
-    // Задание 5
+    // Задание 5.
     public List<PlayerView> FilterPlayers(List<PlayerView> players, string filter)
     {
         List<PlayerView> result = new List<PlayerView>();
