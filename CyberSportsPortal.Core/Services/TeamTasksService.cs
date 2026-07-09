@@ -9,7 +9,7 @@ public class TeamTasksService(CyberSportsContext context)
 {
     private readonly CyberSportsContext _context = context;
 
-    // Задание 2
+    // Задание 2.
     public int GetTeamIncomeForYear(int teamId, int year)
     {
         var team = _context.Teams
